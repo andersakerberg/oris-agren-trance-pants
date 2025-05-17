@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/oris-agren-trance-pants/">
+    <title>AI Psy Trance Generator</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background:
+                linear-gradient(45deg, rgba(26,26,26,0.7), rgba(42,42,42,0.7)),
+                url('mishu.png') center center / cover no-repeat fixed,
+                url('image.png') center center / cover no-repeat fixed;
+            background-blend-mode: lighten, multiply, normal;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: "三菱";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 200px;
+            color: rgba(0, 255, 136, 0.03);
+            font-weight: bold;
+            z-index: -1;
+            white-space: nowrap;
+            pointer-events: none;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
+            animation: float 8s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translate(-50%, -50%) rotate(-45deg) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) rotate(-45deg) scale(1.1);
+            }
+        }
+        .container {
+            max-width: 500px;
+            margin: 0;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+            box-sizing: border-box;
+        }
+        h1 {
+            text-align: center;
+            color: #00ff88;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+        .subtitle, h3 {
+            text-align: center;
+            color: #00ff88;
+            text-shadow: 0 0 8px rgba(0,255,136,0.3);
+            margin-top: 0;
+            margin-bottom: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+        .controls {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        button {
+            background: #00ff88;
+            color: #1a1a1a;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background: #00cc6a;
+            transform: scale(1.05);
+        }
+        .slider-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin: 15px 0;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        .slider-container label {
+            color: #00ff88;
+            font-size: 13px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .slider-container input[type="range"] {
+            width: 100%;
+            margin: 0;
+        }
+        .slider-container span {
+            color: #ff4444;
+            font-size: 13px;
+            font-weight: bold;
+            margin-left: auto;
+        }
+        .pattern-list {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .pattern-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            margin: 5px 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        .pattern-item button {
+            margin-left: 10px;
+        }
+        .pattern-item span {
+            flex-grow: 1;
+        }
+        .section-title {
+            color: #00ff88;
+            margin: 20px 0 12px 0;
+            font-size: 1.1em;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.3);
+            padding-bottom: 6px;
+        }
+        .control-group {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        .control-group label {
+            color: #00ff88;
+            font-size: 13px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .control-group input[type="range"] {
+            width: 100%;
+            margin: 0;
+        }
+        .control-group span {
+            color: #ff4444;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .parameter-group {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin: 0;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        .parameter-group label {
+            color: #00ff88;
+            font-size: 13px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .parameter-group input[type="range"] {
+            width: 100%;
+            margin: 0;
+        }
+        .parameter-group span {
+            color: #ff4444;
+            font-size: 13px;
+            font-weight: bold;
+            margin-left: auto;
+        }
+        .parameter-group select {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            color: #00ff88;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            padding: 6px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        .note-grid, .scale-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 8px;
+            margin: 12px 0;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        .note-checkbox, .scale-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            font-size: 13px;
+        }
+        .note-checkbox:hover, .scale-checkbox:hover {
+            background: rgba(0, 255, 136, 0.1);
+        }
+        .note-checkbox input, .scale-checkbox input {
+            margin: 0;
+            width: 16px;
+            height: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Öris och Ågren</h1>
+        <h3 class="subtitle">Magiska svamptrancefabrik</h3>
+        
+        <div class="controls">
+            <div class="section-title">Playback Controls</div>
+            <div class="button-container">
+                <button id="startBtn">Start</button>
+                <button id="clearBtn" style="background: #ff4444;">Clear</button>
+            </div>
+            
+            <div class="control-group">
+                <div class="parameter-group">
+                    <label for="bpm">BPM <span id="bpmValue">200</span></label>
+                    <input type="range" id="bpm" min="60" max="300" value="85">
+                </div>
+            </div>
+            
+            <div class="section-title">Scale Controls</div>
+            <div class="control-group">
+                <div class="parameter-group">
+                    <label for="noteCount">Notes per Scale <span id="noteCountValue">2</span></label>
+                    <input type="range" id="noteCount" min="2" max="5" value="2" step="1">
+                </div>
+
+                <div class="parameter-group">
+                    <label for="maxJump">Maximum Note Jump <span id="maxJumpValue">2</span></label>
+                    <input type="range" id="maxJump" min="2" max="5" value="2" step="1">
+                </div>
+
+                <div class="parameter-group">
+                    <label for="minSeparation">Minimum Note Separation <span id="minSeparationValue">1</span></label>
+                    <input type="range" id="minSeparation" min="1" max="3" value="1" step="1">
+                </div>
+
+                <div class="parameter-group">
+                    <label for="rootNote">Root Note:</label>
+                    <select id="rootNote" class="scale-select">
+                        <option value="C4">C4</option>
+                        <option value="Db4">Db4</option>
+                        <option value="D4">D4</option>
+                        <option value="Eb4">Eb4</option>
+                        <option value="E4">E4</option>
+                        <option value="F4">F4</option>
+                        <option value="Gb4">Gb4</option>
+                        <option value="G4">G4</option>
+                        <option value="Ab4">Ab4</option>
+                        <option value="A4">A4</option>
+                        <option value="Bb4">Bb4</option>
+                        <option value="B4">B4</option>
+                    </select>
+                </div>
+
+                <div class="parameter-group">
+                    <label for="scaleType">Scale Type:</label>
+                    <select id="scaleType" class="scale-select">
+                        <option value="phrygian">Phrygian</option>
+                        <option value="harmonic">Harmonic</option>
+                        <option value="diminished">Diminished</option>
+                        <option value="wholeTone">Whole Tone</option>
+                        <option value="pentatonic">Pentatonic</option>
+                    </select>
+                </div>
+
+                <div class="parameter-group">
+                    <label for="octaveRange">Octave Range <span id="octaveRangeValue">2</span></label>
+                    <input type="range" id="octaveRange" min="1" max="4" value="2" step="1">
+                </div>
+
+                <div class="parameter-group">
+                    <label for="scaleMode">Scale Mode:</label>
+                    <select id="scaleMode" class="scale-select">
+                        <option value="ascending">Ascending</option>
+                        <option value="descending">Descending</option>
+                        <option value="random">Random</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="section-title">Available Notes</div>
+            <div class="control-group">
+                <div class="note-grid" id="noteGrid">
+                    <!-- Note checkboxes will be added by JavaScript -->
+                </div>
+            </div>
+
+            <div class="section-title">Available Scales</div>
+            <div class="control-group">
+                <div class="scale-grid" id="scaleGrid">
+                    <!-- Scale checkboxes will be added by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="slider-container">
+                <label for="resonance">Resonance</label>
+                <input type="range" id="resonance" min="0" max="20" value="10">
+                <span id="resonanceValue">10</span>
+            </div>
+        </div>
+
+        <canvas id="visualizer" class="visualizer"></canvas>
+
+        <div class="pattern-list">
+            <div class="section-title">Saved Patterns</div>
+            <div id="patternList"></div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <script src="app.js"></script>
+    <img src="image.png" style="display:none;" />
+    <img src="mishu.png" style="display:none;" />
+</body>
+</html> 
