@@ -1,0 +1,72 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Optional npm cache directory
+.npm
+
+# dotenv environment variables file
+.env
+.env.*.local
+
+# Logs
+logs
+*.log
+*.log.*
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editor directories and files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Build output
+dist/
+build/
+tmp/
+temp/
+.cache/
+.next/
+out/
+coverage/
+lib-cov/
+*.tsbuildinfo
+
+# Test output
+test-output/
+junit.xml
+coverage/
+
+# Misc
+*.tgz
+*.swp
+*.bak
+*.orig
+*.rej
+
+# Local history for some editors
+.history/
+
+# Mac system files
+.AppleDouble
+.LSOverride
+
+# VS Code settings
+.vscode/*
+!.vscode/settings.json
+
+# Ignore public/generated audio files
+public/*.webm
+public/*.wav
+public/*.mp3
