@@ -12,7 +12,11 @@
             align-items: center;
             min-height: 100vh;
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(45deg, rgba(26,26,26,0.7), rgba(42,42,42,0.7)), url('image.png') center center / cover no-repeat fixed;
+            background:
+                linear-gradient(45deg, rgba(26,26,26,0.7), rgba(42,42,42,0.7)),
+                url('mishu.png') center center / cover no-repeat fixed,
+                url('image.png') center center / cover no-repeat fixed;
+            background-blend-mode: lighten, multiply, normal;
             color: #fff;
             margin: 0;
             padding: 20px;
@@ -54,6 +58,15 @@
             text-align: center;
             color: #00ff88;
             text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+        .subtitle, h3 {
+            text-align: center;
+            color: #00ff88;
+            text-shadow: 0 0 8px rgba(0,255,136,0.3);
+            margin-top: 0;
+            margin-bottom: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
         }
         .controls {
             background: rgba(255, 255, 255, 0.1);
@@ -230,7 +243,7 @@
 <body>
     <div class="container">
         <h1>Öris och Ågren</h1>
-        <h2>Magiska svamptrancefabrik</h2>
+        <h3 class="subtitle">Magiska svamptrancefabrik</h3>
         
         <div class="controls">
             <div class="section-title">Playback Controls</div>
@@ -242,7 +255,7 @@
             <div class="control-group">
                 <div class="parameter-group">
                     <label for="bpm">BPM <span id="bpmValue">200</span></label>
-                    <input type="range" id="bpm" min="60" max="300" value="200">
+                    <input type="range" id="bpm" min="60" max="300" value="85">
                 </div>
             </div>
             
@@ -337,5 +350,7 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <script src="app.js"></script>
+    <img src="image.png" style="display:none;" />
+    <img src="mishu.png" style="display:none;" />
 </body>
 </html> 
