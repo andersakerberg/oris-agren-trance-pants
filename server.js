@@ -1,16 +1,16 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-// Serve static files from the public directory
-app.use(express.static('public'));
+// Serve static files from the dist directory
+app.use(express.static('dist'));
 
 // Serve the main page
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 app.listen(port, () => {
-    console.log(`Psy Trance Generator running at http://localhost:${port}`);
+    console.log(`Psy Trance Generator running on port ${port}`);
 }); 
